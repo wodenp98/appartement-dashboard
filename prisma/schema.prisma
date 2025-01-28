@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String?   @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  comments     Comment[]
+  sessions     Session[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  sessionToken String   @unique
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Apartment {
+  id              String           @id @default(cuid())
+  title           String
+  description     String?
+  rooms           Int
+  bedrooms        Int
+  surface         Float            @db.Real
+  rent            Float            @db.Real
+  neighborhood    String
+  metro           String?
+  burden          Boolean          @default(false)
+  appointmentDate DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  images          ApartmentImage[]
+  comments        Comment[]
+}
+
+model ApartmentImage {
+  id          String    @id @default(cuid())
+  fileName    String
+  publicUrl   String
+  apartmentId String
+  createdAt   DateTime  @default(now())
+  apartment   Apartment @relation(fields: [apartmentId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id          String    @id @default(cuid())
+  content     String
+  apartmentId String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      String
+  apartment   Apartment @relation(fields: [apartmentId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
