@@ -92,13 +92,13 @@ export async function deleteAppointmentDate(apartmentId: string) {
     }
 }
 
-export async function deleteComment(commentId: string) {
+export async function deleteComment(commentId: string, apartmentId: string) {
     try {
         await prisma.comment.delete({
             where: { id: commentId }
         })
 
-        revalidatePath("/apartment/[id]")
+        revalidatePath(`/apartment/${apartmentId}`)
         return { success: true }
     } catch (error) {
         console.error("Error deleting comment:", error)

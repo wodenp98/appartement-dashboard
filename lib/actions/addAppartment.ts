@@ -20,7 +20,8 @@ export async function addApartment(formData: FormData) {
         const rooms = formData.get('rooms') as string
         const bedrooms = formData.get('bedrooms') as string
         const description = formData.get('description') as string
-        const burden = formData.get('burden') as boolean | null
+        const burdenValue = formData.get('burden');
+        const burden = burdenValue === 'on';
         const photos = formData.getAll('photos') as File[]
 
         if (!district || !price || !rooms || !bedrooms) {
@@ -35,7 +36,7 @@ export async function addApartment(formData: FormData) {
                 bedrooms: parseInt(bedrooms),
                 rent: parseFloat(price),
                 neighborhood: district,
-                burden: burden ?? false,
+                burden: burden,
                 metro,
                 surface: parseInt(size),
             },

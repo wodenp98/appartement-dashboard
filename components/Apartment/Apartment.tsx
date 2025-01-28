@@ -121,7 +121,7 @@ export const Apartment = ({ apartment, userId }: ApartmentCardProps) => {
 
     const handleCommentDelete = async (commentId: string) => {
         setIsLoading(true)
-        const result = await deleteComment(commentId)
+        const result = await deleteComment(commentId, apartment.id)
         setIsLoading(false)
 
         if (result.success) {
