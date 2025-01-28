@@ -3,8 +3,18 @@ import { Button } from '@/components/ui/button';
 import { Check, X, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const AnimatedSubmitButton = ({ onClick, isLoading, disabled, className }) => {
-    const [animationState, setAnimationState] = useState('idle');
+interface AnimatedSubmitButtonProps {
+    onClick: () => Promise<{ success: boolean; error?: string }>;
+    disabled: boolean;
+    className?: string;
+}
+
+const AnimatedSubmitButton = ({
+                                  onClick,
+                                  disabled,
+                                  className
+                              }: AnimatedSubmitButtonProps) => {
+    const [animationState, setAnimationState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const handleClick = async () => {
         try {
@@ -37,14 +47,14 @@ const AnimatedSubmitButton = ({ onClick, isLoading, disabled, className }) => {
                 className
             )}
             onClick={handleClick}
-            disabled={disabled || isLoading || animationState !== 'idle'}
+            disabled={disabled || animationState !== 'idle'}
         >
-      <span className={cn(
-          'transition-opacity duration-200',
-          (animationState !== 'idle') && 'opacity-0'
-      )}>
-        Enregistrer
-      </span>
+            <span className={cn(
+                'transition-opacity duration-200',
+                (animationState !== 'idle') && 'opacity-0'
+            )}>
+                Enregistrer
+            </span>
 
             {animationState === 'loading' && (
                 <Loader2 className="w-5 h-5 animate-spin absolute" />

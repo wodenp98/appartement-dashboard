@@ -20,7 +20,7 @@ export async function addApartment(formData: FormData) {
         const rooms = formData.get('rooms') as string
         const bedrooms = formData.get('bedrooms') as string
         const description = formData.get('description') as string
-        const burden = formData.get('burden') as boolean
+        const burden = formData.get('burden') as boolean | null
         const photos = formData.getAll('photos') as File[]
 
         if (!district || !price || !rooms || !bedrooms) {
@@ -35,7 +35,7 @@ export async function addApartment(formData: FormData) {
                 bedrooms: parseInt(bedrooms),
                 rent: parseFloat(price),
                 neighborhood: district,
-                burden: burden === "on",
+                burden: burden ?? false,
                 metro,
                 surface: parseInt(size),
             },
@@ -65,7 +65,8 @@ export async function addApartment(formData: FormData) {
 
             if (uploadError) throw uploadError
 
-            const { data: { signedUrl } } = await supabase
+            // @ts-ignore
+            const { data: { signedUrl  }} = await supabase
                 .storage
                 .from('images')
                 .createSignedUrl(fileName, 31536000)

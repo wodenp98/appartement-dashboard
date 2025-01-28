@@ -29,6 +29,10 @@ export default async function ApartmentPage({
     }
     const apartment = await getApartment(apartmentId)
 
+    if(!apartment) {
+        return redirect("/404")
+    }
+
     return (
         <Apartment apartment={apartment} userId={user.id} />
     )
