@@ -37,7 +37,7 @@ export default async function Home() {
             </div>
             <div className="flex gap-4">
               <Link href="/login" className={buttonVariants({size: "lg"})}>
-                Sign In
+                Se connecter
               </Link>
             </div>
           </div>

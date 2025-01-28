@@ -69,7 +69,7 @@ export default function LoginPage() {
                     </div>
 
                     <Button type="submit" className="w-full">
-                        Sign in
+                        Se connecter
                     </Button>
                 </form>
             </div>
