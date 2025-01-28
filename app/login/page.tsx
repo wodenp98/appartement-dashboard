@@ -37,8 +37,8 @@ export default function LoginPage() {
         <main className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold">Welcome back</h1>
-                    <p className="text-muted-foreground">Please enter your credentials</p>
+                    <h1 className="text-2xl font-bold">Bienvenue</h1>
+                    <p className="text-muted-foreground">Entre tes identifiants</p>
                 </div>
 
                 <form action={handleLogin} className="space-y-4">
